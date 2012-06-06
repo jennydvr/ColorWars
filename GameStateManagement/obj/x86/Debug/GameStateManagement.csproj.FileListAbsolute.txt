@@ -1,0 +1,12 @@
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\GameStateManagement\bin\x86\Debug\GameStateManagement.dll
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\GameStateManagement\bin\x86\Debug\GameStateManagement.pdb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\GameStateManagement\obj\x86\Debug\GameStateManagement.csprojResolveAssemblyReference.cache
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\GameStateManagement\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\GameStateManagement\obj\x86\Debug\GameStateManagement.dll
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\GameStateManagement\obj\x86\Debug\GameStateManagement.pdb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\GameStateManagement\bin\x86\Debug\GameStateManagement.dll
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\GameStateManagement\bin\x86\Debug\GameStateManagement.pdb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\GameStateManagement\obj\x86\Debug\ResolveAssemblyReference.cache
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\GameStateManagement\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\GameStateManagement\obj\x86\Debug\GameStateManagement.dll
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\GameStateManagement\obj\x86\Debug\GameStateManagement.pdb

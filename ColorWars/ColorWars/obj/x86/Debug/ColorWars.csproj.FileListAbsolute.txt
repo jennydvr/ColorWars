@@ -1,0 +1,42 @@
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\ColorWars.exe
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\ColorWars.pdb
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\obj\x86\Debug\ColorWars.exe
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\obj\x86\Debug\ColorWars.pdb
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\SquareGuy.xnb
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Characters\Dotty.xnb
+c:\users\jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Characters\Squorre.xnb
+C:\Users\Jenny\documents\visual studio 2010\Projects\ColorWars\ColorWars\ColorWars\obj\x86\Debug\ColorWars.csprojResolveAssemblyReference.cache
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\ColorWars.exe.config
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Gearset.dll
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Gearset.xml
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Fonts\gameFont.xnb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\GameStateManagement.dll
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\GameStateManagement.pdb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Background\blank.xnb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Background\gradient.xnb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Background\RedPaper.xnb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\obstacle.xnb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\ball.xnb
+C:\Users\Jenny\Documents\Visual Studio 2010\Projects\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\paper.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\paper.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\SquareGuy.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Characters\Dotty.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Characters\Squorre.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Background\blank.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Background\gradient.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Background\RedPaper.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\obstacle.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\ball.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Fonts\gameFont.xnb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\ColorWars.exe.config
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\ColorWars.exe
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\ColorWars.pdb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\GameStateManagement.dll
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\GameStateManagement.pdb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Gearset.xml
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\obj\x86\Debug\ResolveAssemblyReference.cache
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\obj\x86\Debug\ColorWars.exe
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\obj\x86\Debug\ColorWars.pdb
+\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\cuadrito.xnb

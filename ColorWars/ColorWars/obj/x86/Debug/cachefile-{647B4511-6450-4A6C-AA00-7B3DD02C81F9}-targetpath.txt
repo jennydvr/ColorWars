@@ -1,0 +1,11 @@
+Content\paper.xnb
+Content\SquareGuy.xnb
+Content\Characters\Dotty.xnb
+Content\Characters\Squorre.xnb
+Content\Background\blank.xnb
+Content\Background\gradient.xnb
+Content\Background\RedPaper.xnb
+Content\obstacle.xnb
+Content\ball.xnb
+Content\Fonts\gameFont.xnb
+Content\cuadrito.xnb
