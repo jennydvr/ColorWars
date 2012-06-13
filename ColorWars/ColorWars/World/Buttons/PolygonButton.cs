@@ -5,11 +5,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ColorWars
 {
-    class TriangleButton : Button
+    class PolygonButton : Button
     {
         private List<Vector2> points;
+        static public bool creando = false;
 
-        public TriangleButton(ContentManager content, Vector2 position)
+        public PolygonButton(ContentManager content, Vector2 position)
             : base(content, position)
         {
             points = new List<Vector2>();
@@ -17,14 +18,25 @@ namespace ColorWars
 
         public override void Action(MouseState mouse)
         {
+            if (!creando)
+            {
+                if (points.Count == 0)
+                    return;
+
+                foreach (Point node in EditorMode.nodes)
+                    node.color = Color.Red;
+
+                GameMode.polygons.Add(new Polygon(points));
+                points.Clear();
+                return;
+            }
+
             Vector2 point = new Vector2(mouse.X, mouse.Y);
             bool isOnList = false;
 
             // Check if point is already on nodes list
-            foreach (Node node in EditorMode.nodes)
+            foreach (Point node in EditorMode.nodes)
             {
-                node.color = Color.Red;
-
                 if (!isOnList & node.Contains(point))
                 {
                     point = node.point;
@@ -33,19 +45,12 @@ namespace ColorWars
                 }
             }
 
-            // If it is not, add it
+            // If it is not, return
             if (!isOnList)
-                EditorMode.nodes.Add(new Node(point));
+                return;
 
             // Add it to the new rectangle
-            points.Add(new Vector2(mouse.X, mouse.Y));
-
-            // If there are enough points to make a triangle, add it to the list
-            if (points.Count == 3)
-            {
-                EditorMode.triangles.Add(new Triangle(points[0], points[1], points[2]));
-                points.Clear();
-            }
+            points.Add(point);
         }
     }
 }

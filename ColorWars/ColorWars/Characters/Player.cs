@@ -36,16 +36,11 @@ namespace ColorWars
 
         #region Initialization
 
-        public Player()
-            : base()
+        public Player(float startPositionX, float startPositionY)
+            : base(startPositionX, startPositionY)
         {
-            kinematic.position = new Vector3(START_POSITION_X, START_POSITION_Y, 0);
-            bound = new BoundingSphere(kinematic.position, 34);
             behavior = new LookWhereYoureGoing();
-
             lifeColor = Color.White;
-
-            CollisionDetector.players.Add(bound);
         }
 
         public void LoadContent(ContentManager cont)
@@ -139,15 +134,6 @@ namespace ColorWars
         {
             if (currentKeyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
                 CollisionDetector.balls.Add(new Paintball(content, kinematic.Clone(), Color.DeepSkyBlue));
-        }
-
-        #endregion
-
-        #region Others
-
-        public override string ToString()
-        {
-            return "<player> " + kinematic.position.X + " " + kinematic.position.Y + " </player>\n";
         }
 
         #endregion

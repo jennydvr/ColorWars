@@ -24,19 +24,14 @@ namespace ColorWars
         #region Initialization
 
         public Enemy(float startPositionX, float startPositionY)
-            : base()
+            : base(startPositionX, startPositionY)
         {
-            kinematic.position = new Vector3(startPositionX, startPositionY, 0);
-            bound = new BoundingSphere(kinematic.position, 34);
-
             lifeColor = Color.DeepSkyBlue;
 
             // Initialize all the behaviors of the enemy
             behaviors = new List<SteeringBehavior>();
             InitializeBehaviors();
             machine = new BasicMachine(this);
-
-            CollisionDetector.players.Add(bound);
         }
 
         public void LoadContent(ContentManager cont)

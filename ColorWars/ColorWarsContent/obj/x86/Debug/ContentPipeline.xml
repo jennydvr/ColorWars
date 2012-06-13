@@ -86,15 +86,6 @@
       <Time>2012-05-13T23:04:55-04:30</Time>
     </Item>
     <Item>
-      <Source>Fonts\gameFont.spritefont</Source>
-      <Name>Fonts\gameFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Fonts\gameFont.xnb</Output>
-      <Time>2012-05-04T13:22:02-04:30</Time>
-    </Item>
-    <Item>
       <Source>cuadrito.png</Source>
       <Name>cuadrito</Name>
       <Importer>TextureImporter</Importer>
@@ -102,6 +93,15 @@
       <Options>None</Options>
       <Output>\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\cuadrito.xnb</Output>
       <Time>2012-06-05T16:57:52-04:30</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\gameFont.spritefont</Source>
+      <Name>Fonts\gameFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\psf\Home\Documents\Lenguajes\C#\ColorWars\ColorWars\ColorWars\bin\x86\Debug\Content\Fonts\gameFont.xnb</Output>
+      <Time>2012-05-04T13:22:02-04:30</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

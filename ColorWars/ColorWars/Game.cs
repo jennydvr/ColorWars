@@ -11,9 +11,7 @@ namespace ColorWars
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        DebugMode debug;
-        GameMode game;
-        EditorMode editor;
+        GameMode mode;
         Texture2D background;
 
         public Game()
@@ -41,10 +39,10 @@ namespace ColorWars
             graphics.ApplyChanges();
 
             // Initializes debug mode
-            editor = new EditorMode(this.Content);
-//            debug = new DebugMode();
-//            game = new GameMode();
-            
+//            mode = new GameMode(this.Content);
+            mode = new DebugMode(this.Content);
+//            mode = new EditorMode(this.Content);
+
             base.Initialize();
         }
 
@@ -58,9 +56,7 @@ namespace ColorWars
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Loads stuff from debug mode
-            editor.LoadContent();
-//            debug.LoadContent(this.Content);
-//            game.LoadContent(this.Content);
+            mode.LoadContent();
 
             // Load background
             background = Content.Load<Texture2D>("paper");
@@ -87,9 +83,8 @@ namespace ColorWars
                 this.Exit();
 
             // TODO: Add your update logic here
-            editor.Update(gameTime);
-//            debug.Update(gameTime);
-//            game.Update(gameTime);
+            mode.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -106,9 +101,7 @@ namespace ColorWars
 
             spriteBatch.Draw(background, GraphicsDevice.Viewport.Bounds, Color.White);
 
-            editor.Draw(spriteBatch);
-//            debug.Draw(spriteBatch);
-//            game.Draw(spriteBatch);
+            mode.Draw(spriteBatch);
 
             spriteBatch.End();
 

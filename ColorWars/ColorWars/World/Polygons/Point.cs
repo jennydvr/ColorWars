@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ColorWars
 {
-    class Node
+    class Point
     {
         #region Variables
 
@@ -31,11 +31,11 @@ namespace ColorWars
         /// Constructor
         /// </summary>
         /// <param name="point">The center of the node</param>
-        public Node(Vector2 point)
+        public Point(Vector2 point)
         {
             this.point = point;
             this.rectangle = new Rectangle((int)point.X - 5, (int)point.Y - 5, 10, 10);
-            this.color = Color.Yellow;
+            this.color = Color.Red;
         }
 
         /// <summary>
@@ -61,16 +61,6 @@ namespace ColorWars
         public bool Contains(Vector2 spot)
         {
             return rectangle.Contains((int)spot.X, (int)spot.Y);
-        }
-
-
-        /// <summary>
-        /// Returns the string representation of the node
-        /// </summary>
-        /// <returns>String representing the node</returns>
-        public override string ToString()
-        {
-            return "<node>" + point.X + " " + point.Y + "</node>";
         }
 
         #endregion

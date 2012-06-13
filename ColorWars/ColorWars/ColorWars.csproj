@@ -115,6 +115,8 @@
     <Compile Include="Behaviors\Blendings\CarefullyPursue.cs" />
     <Compile Include="Behaviors\Blendings\FleeDisappear.cs" />
     <Compile Include="Behaviors\Blendings\SmartEvade.cs" />
+    <Compile Include="Behaviors\Blendings\StarCatch.cs" />
+    <Compile Include="Behaviors\Chase\FollowPath.cs" />
     <Compile Include="Behaviors\Match\Align.cs" />
     <Compile Include="Behaviors\Chase\Arrive.cs" />
     <Compile Include="Behaviors\Avoidances\AvoidBullets.cs" />
@@ -164,18 +166,23 @@
     <Compile Include="StateMachine\StateMachine.cs" />
     <Compile Include="StateMachine\Transitions\Transition.cs" />
     <Compile Include="World\Background.cs" />
-    <Compile Include="World\DebugMode.cs" />
-    <Compile Include="World\EditorMode.cs" />
-    <Compile Include="World\GameMode.cs" />
+    <Compile Include="World\Buttons\NodesButton.cs" />
+    <Compile Include="World\Buttons\PolygonButton.cs" />
+    <Compile Include="World\Graph\AStar.cs" />
+    <Compile Include="World\Graph\Heuristic.cs" />
+    <Compile Include="World\Graph\Node.cs" />
+    <Compile Include="World\Modes\DebugMode.cs" />
+    <Compile Include="World\Modes\EditorMode.cs" />
+    <Compile Include="World\Modes\GameMode.cs" />
     <Compile Include="World\Obstacle.cs" />
     <Compile Include="World\Buttons\Button.cs" />
     <Compile Include="World\Buttons\EnemiesButton.cs" />
-    <Compile Include="World\Polygons\Node.cs" />
+    <Compile Include="World\Graph\Graph.cs" />
+    <Compile Include="World\Polygons\Point.cs" />
     <Compile Include="World\Buttons\ObstaclesButton.cs" />
     <Compile Include="World\Buttons\PlayerButton.cs" />
     <Compile Include="World\Buttons\SaveButton.cs" />
-    <Compile Include="World\Polygons\Triangle.cs" />
-    <Compile Include="World\Buttons\TriangleButton.cs" />
+    <Compile Include="World\Polygons\Polygon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

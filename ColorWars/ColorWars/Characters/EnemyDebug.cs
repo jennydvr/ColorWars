@@ -38,6 +38,8 @@ namespace ColorWars
             behaviors.Add(new VelocityMatch());
             behaviors.Add(new Wander());
             behaviors.Add(new GroupWander(this));
+            behaviors.Add(new FollowPath());
+            behaviors.Add(new StarCatch(this));
         }
 
         #endregion
@@ -86,7 +88,7 @@ namespace ColorWars
                 ++currentBehavior;
 
                 // There are 10 behavior showing
-                if (currentBehavior > 9)
+                if (currentBehavior > 11)
                     currentBehavior = 0;
             }
         }
@@ -96,9 +98,9 @@ namespace ColorWars
             SteeringOutput steering = new SteeringOutput();
 
             // The first 8 behaviors need the target
-            if (currentBehavior < 8)
+            if (currentBehavior < 8 || currentBehavior == 10 || currentBehavior == 11)
             {
-                MAX_SPEED = 150;
+                MAX_SPEED = 100;
                 steering = behaviors[currentBehavior].GetSteering(kinematic, target);
             }
             // The others doesn't need a target

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace ColorWars
 {
@@ -51,12 +52,16 @@ namespace ColorWars
 
         #region Initialization
 
-        public Character()
+        public Character(float startPositionX, float startPositionY)
         {
             kinematic = new Kinematic();
             life = 100;
             sourceRect = new Rectangle(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
             spriteColor = Color.White;
+
+            kinematic.position = new Vector3(startPositionX, startPositionY, 0);
+            bound = new BoundingSphere(kinematic.position, 34);
+            CollisionDetector.players.Add(bound);
         }
 
         public void LoadContent(string asset)

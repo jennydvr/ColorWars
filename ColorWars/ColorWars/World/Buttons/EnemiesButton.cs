@@ -15,7 +15,7 @@ namespace ColorWars
         {
             Enemy squorre = new Enemy(mouse.X, mouse.Y);
             squorre.LoadContent(content);
-            EditorMode.squorres.Add(squorre);
+            GameMode.squorres.Add(squorre);
         }
     }
 }
