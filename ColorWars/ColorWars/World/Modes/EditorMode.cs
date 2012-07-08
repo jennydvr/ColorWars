@@ -10,8 +10,15 @@ namespace ColorWars
     {
         #region Items of the game
 
-        // Polygons
+        /// <summary>
+        /// Nodes
+        /// </summary>
         static public List<Point> nodes = new List<Point>();
+
+        /// <summary>
+        /// Vision Graph
+        /// </summary>
+        static public Graph vision = new Graph();
 
         #endregion
 
@@ -24,6 +31,8 @@ namespace ColorWars
         PolygonButton polyButton;
         SaveButton saButton;
         NodesButton nButton;
+        ArcButton aButton;
+        SaveVisionButton visButton;
 
         // Other stuff
         MouseState previousMouseState;
@@ -37,7 +46,9 @@ namespace ColorWars
             Obstacles,
             Polygon,
             Node,
-            Save
+            Save,
+            Arc,
+            SaveVision
         }
         State currentState = State.None;
 
@@ -60,12 +71,41 @@ namespace ColorWars
             obsButton = new ObstaclesButton(content, new Vector2(250, 50));
             polyButton = new PolygonButton(content, new Vector2(300, 50));
             nButton = new NodesButton(content, new Vector2(350, 50));
-            saButton = new SaveButton(content, new Vector2(400, 50));
+            aButton = new ArcButton(content, new Vector2(400, 50));
+            saButton = new SaveButton(content, new Vector2(450, 50));
+            visButton = new SaveVisionButton(content, new Vector2(500, 50));
         }
 
         public override void LoadContent()
         {
+            ReadXML();
+
+            // Fill the nodes
+            for (int i = 0; i != polygons.Count; ++i)
+                nodes.Add(new Point(polygons[i].center));
+
+            // Finally create the graph
+            movement = new Graph();
+            movement.arcs = new float[nodes.Count, nodes.Count];
+
+            for (int i = 0; i != polygons.Count; ++i)
+                movement.nodes.Add(new Node(polygons[i].center, i));
+
+            for (int i = 0; i != GameMode.polygons.Count; ++i)
+                for (int j = i; j < GameMode.polygons.Count; ++j)
+                    movement.arcs[i, j] = movement.arcs[j, i] = float.PositiveInfinity;
+
+            // Load obstacles
+            foreach (Obstacle obstacle in obstacles)
+                obstacle.LoadContent(content);
+
+            // Load player
             dotty.LoadContent(content);
+
+            // Load enemies
+            foreach (Enemy squorre in squorres)
+                squorre.LoadContent(content);
+
         }
 
         #endregion
@@ -81,7 +121,6 @@ namespace ColorWars
             UpdateStates(currentMouseState);
 
             previousMouseState = currentMouseState;
-            graph = new Graph();
         }
 
         public override void Draw(SpriteBatch batch)
@@ -106,7 +145,7 @@ namespace ColorWars
                 node.Draw(content, batch);
 
             // Draw graph
-            graph.Draw(content, batch);
+            movement.Draw(content, batch);
 
             // Draw buttons
             plButton.Draw(batch);
@@ -115,6 +154,8 @@ namespace ColorWars
             polyButton.Draw(batch);
             saButton.Draw(batch);
             nButton.Draw(batch);
+            aButton.Draw(batch);
+            visButton.Draw(batch);
 
             // Show state
             Gearset.GS.Show("Estado", currentState);
@@ -145,22 +186,30 @@ namespace ColorWars
                 currentState = State.Save;
             else if (nButton.IsClicked(currentMouseState))
                 currentState = State.Node;
+            else if (aButton.IsClicked(currentMouseState))
+                currentState = State.Arc;
+            else if (visButton.IsClicked(currentMouseState))
+                currentState = State.SaveVision;
         }
 
         protected void Action(MouseState currentMouseState)
         {
-            if (!nButton.IsClicked(currentMouseState) & !saButton.IsClicked(currentMouseState) & !obsButton.IsClicked(currentMouseState) & !plButton.IsClicked(currentMouseState) & !polyButton.IsClicked(currentMouseState) & currentState == State.Enemies)
+            if (OnlyPressedButtonIs(enButton, currentMouseState) & currentState == State.Enemies)
                 UpdateButton(enButton, currentMouseState);
-            else if (!nButton.IsClicked(currentMouseState) & !saButton.IsClicked(currentMouseState) & !enButton.IsClicked(currentMouseState) & !plButton.IsClicked(currentMouseState) & !polyButton.IsClicked(currentMouseState) & currentState == State.Obstacles)
+            else if (OnlyPressedButtonIs(obsButton, currentMouseState) & currentState == State.Obstacles)
                 UpdateButton(obsButton, currentMouseState);
-            else if (!nButton.IsClicked(currentMouseState) & !saButton.IsClicked(currentMouseState) & !obsButton.IsClicked(currentMouseState) & !enButton.IsClicked(currentMouseState) & !polyButton.IsClicked(currentMouseState) & currentState == State.Player)
+            else if (OnlyPressedButtonIs(plButton, currentMouseState) & currentState == State.Player)
                 UpdateButton(plButton, currentMouseState);
-            else if (!nButton.IsClicked(currentMouseState) & !saButton.IsClicked(currentMouseState) & !obsButton.IsClicked(currentMouseState) & !enButton.IsClicked(currentMouseState) & !plButton.IsClicked(currentMouseState) & currentState == State.Polygon)
+            else if (OnlyPressedButtonIs(polyButton, currentMouseState) & currentState == State.Polygon)
                 UpdateButton(polyButton, currentMouseState);
-            else if (!nButton.IsClicked(currentMouseState) & !obsButton.IsClicked(currentMouseState) & !plButton.IsClicked(currentMouseState) & !polyButton.IsClicked(currentMouseState) & !enButton.IsClicked(currentMouseState) & currentState == State.Save)
+            else if (OnlyPressedButtonIs(saButton, currentMouseState) & currentState == State.Save)
                 UpdateButton(saButton, currentMouseState);
-            else if (!saButton.IsClicked(currentMouseState) & !obsButton.IsClicked(currentMouseState) & !plButton.IsClicked(currentMouseState) & !polyButton.IsClicked(currentMouseState) & !enButton.IsClicked(currentMouseState) & currentState == State.Node)
+            else if (OnlyPressedButtonIs(nButton, currentMouseState) & currentState == State.Node)
                 UpdateButton(nButton, currentMouseState);
+            else if (OnlyPressedButtonIs(aButton, currentMouseState) & currentState == State.Arc)
+                UpdateButton(aButton, currentMouseState);
+            else if (OnlyPressedButtonIs(visButton, currentMouseState) & currentState == State.Arc)
+                UpdateButton(visButton, currentMouseState);
         }
 
         protected void UpdateButton(Button button, MouseState currentMouseState)
@@ -169,6 +218,26 @@ namespace ColorWars
                 return;
 
             button.Action(currentMouseState);
+        }
+
+        protected bool OnlyPressedButtonIs(Button button, MouseState currentMouseState)
+        {
+            // Add to the list all the buttons
+            List<Button> list = new List<Button>();
+            list.Add(plButton);
+            list.Add(enButton);
+            list.Add(obsButton);
+            list.Add(polyButton);
+            list.Add(nButton);
+            list.Add(aButton);
+            list.Add(saButton);
+            list.Add(visButton);
+
+            foreach (Button other in list)
+                if (!button.GetType().Equals(other.GetType()) && other.IsClicked(currentMouseState))
+                    return false;
+
+            return true;
         }
 
         #endregion

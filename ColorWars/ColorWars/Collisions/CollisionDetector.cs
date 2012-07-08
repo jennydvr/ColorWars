@@ -29,6 +29,11 @@ namespace ColorWars
         /// </summary>
         static public List<Paintball> balls = new List<Paintball>();
 
+        /// <summary>
+        /// Saves the thinnerballs in the game
+        /// </summary>
+        static public List<Thinner> thinners = new List<Thinner>();
+
         #endregion
 
         #region Methods
@@ -89,6 +94,23 @@ namespace ColorWars
             foreach (Paintball ball in balls)
                 if (ball.color == color & ball.bound.Intersects(sphere))
                     return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check for collisions with thinnerballs
+        /// </summary>
+        /// <param name="sphere">Character's bounds</param>
+        /// <returns></returns>
+        static public bool CheckThinnerballsCollisions(BoundingSphere sphere)
+        {
+            foreach (Thinner ball in thinners)
+                if (ball.bound.Intersects(sphere))
+                {
+                    ball.activated = false;
+                    return true;
+                }
 
             return false;
         }
@@ -160,7 +182,6 @@ namespace ColorWars
             float min = float.PositiveInfinity;
 
             // Find a collision with enemies only
-      //      foreach (Enemy squorre in DebugMode.squorres)
             foreach (Enemy squorre in GameMode.squorres)
             {
                 if (squorre == owner)

@@ -8,7 +8,7 @@ using Gearset;
 namespace ColorWars
 {
     /// <summary>
-    /// Implements the align behavior
+    /// Implements the face behavior
     /// </summary>
     class Face : Align
     {
@@ -20,9 +20,7 @@ namespace ColorWars
             Vector3 direction = target.position - character.position;
 
             if (direction.Length() == 0)
-            {
                 return new SteeringOutput();
-            }
 
             // Put the target together
             base.target = target;

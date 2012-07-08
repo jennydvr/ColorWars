@@ -33,15 +33,11 @@ namespace ColorWars
             float prediction = 0;
 
             if (speed <= distance / maxPrediction)
-            {
                 prediction = maxPrediction;
-            }
             else
-            {
                 prediction = distance / speed;
-            }
 
-            // Call arrive
+            // Call flee
             base.target = target;
             base.target.position += base.target.velocity * prediction;
 

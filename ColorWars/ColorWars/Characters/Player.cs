@@ -132,8 +132,12 @@ namespace ColorWars
 
         private void UpdatePaintballs(KeyboardState currentKeyboardState, GameTime time)
         {
-            if (currentKeyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
+            balltimer += (float)time.ElapsedGameTime.TotalMilliseconds;
+
+            if (balltimer > ballinterval && currentKeyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter)) {
                 CollisionDetector.balls.Add(new Paintball(content, kinematic.Clone(), Color.DeepSkyBlue));
+                balltimer = 0;
+            }
         }
 
         #endregion

@@ -82,9 +82,7 @@ namespace ColorWars
             steering.linear = maxAcceleration * orientation;
 
             if (DEBUG)
-            {
                 Debug();
-            }
 
             return steering;
         }

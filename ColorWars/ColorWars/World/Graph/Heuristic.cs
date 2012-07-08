@@ -25,7 +25,7 @@ namespace ColorWars
         /// <returns>Float estimated</returns>
         public float estimate(Node node)
         {
-            return GameMode.graph.arcs[goal.id, node.id];
+            return GameMode.movement.arcs[goal.id, node.id];
         }
     }
 }

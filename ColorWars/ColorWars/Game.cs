@@ -39,8 +39,8 @@ namespace ColorWars
             graphics.ApplyChanges();
 
             // Initializes debug mode
-//            mode = new GameMode(this.Content);
-            mode = new DebugMode(this.Content);
+            mode = new GameMode(this.Content);
+//            mode = new DebugMode(this.Content);
 //            mode = new EditorMode(this.Content);
 
             base.Initialize();

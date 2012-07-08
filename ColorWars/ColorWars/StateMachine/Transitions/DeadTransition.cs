@@ -11,7 +11,7 @@
         public DeadTransition(Character character) :
             base(character)
         {
-            this.targetState = new DeadState(character);
+            this.targetState = 2;
             this.condition = new DeadCondition(character);
         }
 

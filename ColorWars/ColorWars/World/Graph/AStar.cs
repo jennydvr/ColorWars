@@ -6,31 +6,37 @@ using Microsoft.Xna.Framework;
 
 namespace ColorWars
 {
-    static class AStar
+    class AStar
     {
-        public static List<Node> open;
-        public static List<Node> closed;
-        public static Heuristic heuristic;
-        public static float[] gScore;
-        public static float[] fScore;
-        public static Node[] parent;
+        public List<Node> open;
+        public List<Node> closed;
+        public Heuristic heuristic;
+        public float[] gScore;
+        public float[] fScore;
+        public Node[] parent;
+        public Graph graph;
 
-        private static void Initialize(Node start, Node goal)
+        public AStar(Graph graph)
+        {
+            this.graph = graph;
+        }
+
+        private void Initialize(Node start, Node goal)
         {
             open = new List<Node>();
             closed = new List<Node>();
             heuristic = new Heuristic(goal);
 
-            gScore = new float[GameMode.graph.nodes.Count];
-            fScore = new float[GameMode.graph.nodes.Count];
-            parent = new Node[GameMode.graph.nodes.Count];
+            gScore = new float[GameMode.movement.nodes.Count];
+            fScore = new float[GameMode.movement.nodes.Count];
+            parent = new Node[GameMode.movement.nodes.Count];
 
             open.Add(start);
             gScore[start.id] = 0;
             fScore[start.id] = heuristic.estimate(start);
         }
 
-        public static List<Node> Pathfind(Node start, Node goal)
+        public List<Node> Pathfind(Node start, Node goal)
         {
             Initialize(start, goal);
 
@@ -47,10 +53,10 @@ namespace ColorWars
                 open.RemoveAt(0);
                 closed.Add(current);
 
-                for (int i = 0; i != GameMode.graph.nodes.Count; ++i)
+                for (int i = 0; i != graph.nodes.Count; ++i)
                 {
-                    Node neighboor = GameMode.graph.nodes[i];
-                    float tentative = GameMode.graph.arcs[current.id, i];
+                    Node neighboor = graph.nodes[i];
+                    float tentative = graph.arcs[current.id, i];
 
                     if (float.IsPositiveInfinity(tentative) | closed.Contains(neighboor))
                         continue;
@@ -70,18 +76,16 @@ namespace ColorWars
             return new List<Node>();
         }
 
-        private static List<Node> BuildPath(Node current, Node start)
+        private List<Node> BuildPath(Node current, Node start)
         {
             List<Node> path = new List<Node>();
 
             while (current != start)
             {
-                current.color = Color.Blue;
                 path.Add(current);
                 current = parent[current.id];
             }
 
-            current.color = Color.Blue;
             path.Add(current);
             path.Reverse();
             return path;

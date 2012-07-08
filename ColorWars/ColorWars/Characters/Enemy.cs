@@ -19,6 +19,8 @@ namespace ColorWars
 
         private BasicMachine machine;
 
+        static bool starMachineAssigned = false;
+
         #endregion
 
         #region Initialization
@@ -31,7 +33,15 @@ namespace ColorWars
             // Initialize all the behaviors of the enemy
             behaviors = new List<SteeringBehavior>();
             InitializeBehaviors();
-            machine = new BasicMachine(this);
+            InitializeSensors();
+
+            if (!starMachineAssigned)
+            {
+                machine = new BasicStarMachine(this);
+                starMachineAssigned = true;
+            }
+            else
+                machine = new BasicPursueMachine(this);
         }
 
         public void LoadContent(ContentManager cont)
@@ -44,6 +54,11 @@ namespace ColorWars
         {
             //behaviors.Add(new CarefullyPursue());
             behaviors.Add(new FleeDisappear(this));
+        }
+
+        protected void InitializeSensors()
+        {
+            sensors.Add(new Smell(this));
         }
 
         #endregion
@@ -69,13 +84,22 @@ namespace ColorWars
         {
           //  SteeringOutput steering = behaviors[0].GetSteering(kinematic, target);
 
+            // Update the movement
             SteeringOutput steering = machine.Update(kinematic, target);
 
             kinematic.Update(steering, MAX_SPEED, time);
 
+            // Update the sensors
+            foreach (Sensor sensor in sensors)
+                sensor.Detect();
+
             // If the character is moving, animate it
             if (kinematic.velocity.Length() > 0)
                 AnimateWalk(time);
+
+
+            foreach (Sensor sensor in sensors)
+                Gearset.GS.Show("Sensor", sensor.Test());
         }
 
         #endregion

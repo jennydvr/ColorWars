@@ -63,8 +63,9 @@ namespace ColorWars
 
             // Check if there is a transition to fire
             if (triggeredTransition != null)
-                currentState = triggeredTransition.getTargetState();
+                currentState = states[triggeredTransition.getTargetState()];
 
+            Gearset.GS.Show("Estado", this.currentState);
             return currentState.GetSteering(character, target);
         }
 

@@ -16,7 +16,7 @@
         {
         }
 
-        public override bool test()
+        public override bool Test()
         {
             return character.life <= 0;
         }

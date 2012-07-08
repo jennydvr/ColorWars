@@ -12,16 +12,18 @@
             base(character)
         {
             // States
-            PursueState pursue = new PursueState(character);
+            StarState star = new StarState(character);
             EvadeState evade = new EvadeState(character);
             DeadState die = new DeadState(character);
+            ChaseLifeState chase = new ChaseLifeState(character);
 
             // Add states
-            this.states.Add(pursue);
+            this.states.Add(star);
             this.states.Add(evade);
             this.states.Add(die);
+            this.states.Add(chase);
 
-            this.initialState = this.currentState = pursue;
+            this.initialState = this.currentState = star;
         }
 
         #endregion

@@ -36,6 +36,11 @@ namespace ColorWars
         public Color lifeColor;
 
         /// <summary>
+        /// Sensors
+        /// </summary>
+        public List<Sensor> sensors = new List<Sensor>();
+
+        /// <summary>
         /// Variables related to animation
         /// </summary>
         protected float timer = 0f;
@@ -47,6 +52,12 @@ namespace ColorWars
         /// </summary>
         public BoundingSphere bound;
         public Vector2 lastValidPosition;
+
+        /// <summary>
+        /// Timer for the paintballs
+        /// </summary>
+        protected float ballinterval = 1000;
+        protected float balltimer = 1000;
 
         #endregion
 
@@ -60,7 +71,7 @@ namespace ColorWars
             spriteColor = Color.White;
 
             kinematic.position = new Vector3(startPositionX, startPositionY, 0);
-            bound = new BoundingSphere(kinematic.position, 34);
+            bound = new BoundingSphere(kinematic.position, 30);
             CollisionDetector.players.Add(bound);
         }
 
@@ -130,6 +141,21 @@ namespace ColorWars
             // Decrease life
             if (life > 0 & CollisionDetector.CheckPaintballsCollisions(bound, lifeColor))
                 life -= 0.4f;
+
+            // Increase life
+            if (life < 100 & CollisionDetector.CheckThinnerballsCollisions(bound))
+                life += 20;
+        }
+
+        private void UpdatePaintballs(GameTime time)
+        {
+            balltimer += (float)time.ElapsedGameTime.TotalMilliseconds;
+
+            if (balltimer > ballinterval)
+            {
+                CollisionDetector.balls.Add(new Paintball(content, kinematic.Clone(), lifeColor));
+                balltimer = 0;
+            }
         }
 
         #endregion

@@ -5,7 +5,7 @@
     /// </summary>
     abstract class Condition
     {
-        #region Variable
+        #region Variables
 
         /// <summary>
         /// Character testing this condition
@@ -29,7 +29,7 @@
         /// Checks whether this condition evaluates to true or not
         /// </summary>
         /// <returns>True if applies, false otherwise</returns>
-        abstract public bool test();
+        abstract public bool Test();
 
         #endregion
     }

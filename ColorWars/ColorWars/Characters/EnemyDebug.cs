@@ -87,8 +87,8 @@ namespace ColorWars
 
                 ++currentBehavior;
 
-                // There are 10 behavior showing
-                if (currentBehavior > 11)
+                // There are 11 behavior showing
+                if (currentBehavior > 12)
                     currentBehavior = 0;
             }
         }

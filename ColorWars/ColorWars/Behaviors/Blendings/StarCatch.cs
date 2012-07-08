@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ColorWars
+﻿namespace ColorWars
 {
     class StarCatch : BlendingBehavior
     {
@@ -17,10 +12,10 @@ namespace ColorWars
         {
             // Create the blending behaviors
             BehaviorAndWeight a = new BehaviorAndWeight(new LookWhereYoureGoing(), 1);
-            BehaviorAndWeight b = new BehaviorAndWeight(new FollowPath(), 1);
-            BehaviorAndWeight c = new BehaviorAndWeight(new AvoidBullets(), 1);
+            BehaviorAndWeight b = new BehaviorAndWeight(new FollowPath(), 1.5f);
+            BehaviorAndWeight c = new BehaviorAndWeight(new AvoidBullets(), 3);
             BehaviorAndWeight d = new BehaviorAndWeight(new ObstacleAvoidance(), 0.5f);
-            BehaviorAndWeight e = new BehaviorAndWeight(new FriendsAvoidance(owner), 1);
+            BehaviorAndWeight e = new BehaviorAndWeight(new FriendsAvoidance(owner), 2);
 
             // Add them to the list
             blending.behaviors.Add(a);

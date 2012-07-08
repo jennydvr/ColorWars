@@ -9,8 +9,8 @@ namespace ColorWars
         #region Constants
 
         protected const string ASSETNAME = "obstacle";
-        protected const int WIDTH = 100;
-        protected const int HEIGTH = 100;
+        protected const int WIDTH = 50;
+        protected const int HEIGTH = 50;
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace ColorWars
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, 100, 100), Color.White);
+            batch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGTH), Color.White);
         }
 
         #endregion

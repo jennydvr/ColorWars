@@ -10,34 +10,43 @@ namespace ColorWars
         /// <summary>
         /// The path to follow
         /// </summary>
-        List<Node> path;
+        List<Node> path = new List<Node>();
         
+        /// <summary>
+        /// Last target polygon
+        /// </summary>
+        Polygon lastPolygon = new Polygon(new List<Vector2>());
+
         #endregion
 
         #region Methods
 
-        
         public override SteeringOutput GetSteering()
         {
             // If the characters are in the same polygon, do nothing
-            if (GetPolygon(character).center == GetPolygon(target).center)
-                return new SteeringOutput();
+            Polygon targetPolygon = GetPolygon(target);
+            if (lastPolygon.center != targetPolygon.center)
+            {
+                // Generate a new path
+                AStar star = new AStar(GameMode.movement);
+                path = star.Pathfind(GetNearestNode(character), GetNearestNode(target));
+                lastPolygon = targetPolygon;
+            }
 
-            // Generate the path
-            if (path.Count == 0)
-                path = AStar.Pathfind(GetNearestNode(character), GetNearestNode(target));
-
-            return base.GetSteering(character, target);
+            return base.GetSteering();
         }
 
         public override SteeringOutput GetSteering(Kinematic character, Kinematic target)
         {
             // If the characters are in the same polygon, do nothing
-            if (GetPolygon(character).center == GetPolygon(target).center)
-                return new SteeringOutput();
-
-            // Generate the path
-            path = AStar.Pathfind(GetNearestNode(character), GetNearestNode(target));
+            Polygon targetPolygon = GetPolygon(target);
+            if (lastPolygon.center != targetPolygon.center)
+            {
+                // Generate a new path
+                AStar star = new AStar(GameMode.movement);
+                path = star.Pathfind(GetNearestNode(character), GetNearestNode(target));
+                lastPolygon = targetPolygon;
+            }
 
             return base.GetSteering(character, target);
         }
@@ -47,12 +56,15 @@ namespace ColorWars
             // Find the next position in the path
             Node next = GetNextNode();
 
-            // If the final node was reached, return nothing
+            // If the final node was reached, return simple seek
             if (next.id == -1)
-                return new SteeringOutput();
-
+                base.target.position = new Vector3(target.position.X, target.position.Y, 0);
             // Else, set the new target
-            base.target.position = new Vector3(next.point.X, next.point.Y, 0);
+            else
+                base.target.position = new Vector3(next.point.X, next.point.Y, 0);
+
+    //        if (SteeringBehavior.DEBUG)
+                Debug();
 
             return base.SteeringGenerator();
         }
@@ -63,29 +75,27 @@ namespace ColorWars
 
         protected Node GetNearestNode(Kinematic character)
         {
-            Polygon polygon = GetPolygon(character);
-            Node ans = new Node(Vector2.Zero, -1);
+            Vector2 pos = GetPolygon(character).center;
 
-            foreach (Node node in GameMode.graph.nodes)
-                if (polygon.center == node.point)
-                    ans = node;
+            foreach (Node node in GameMode.movement.nodes)
+                if (pos == node.point)
+                    return node;
 
-            return ans;
+            return new Node(Vector2.Zero, -1);
         }
 
         protected Node GetNextNode()
         {
-            Polygon polygon = GetPolygon(this.character);
-            Node ans = new Node(Vector2.Zero, -1);
+            Node node = GetNearestNode(this.character);
 
-            if (polygon.center == path[path.Count - 1].point)
-                return ans;
+            if (node.point == path[path.Count - 1].point)
+                return new Node(Vector2.Zero, -1);
 
             for (int i = 0; i != path.Count - 1; ++i)
-                if (polygon.center == path[i].point)
-                    ans = path[i + 1];
+                if (node.point == path[i].point)
+                    return path[i + 1];
 
-            return ans;
+            return new Node(Vector2.Zero, -1);
         }
 
         protected Polygon GetPolygon(Kinematic character)
@@ -106,6 +116,21 @@ namespace ColorWars
             }
 
             return polygon;
+        }
+
+        #endregion
+
+        #region Debug
+
+        void Debug()
+        {
+            foreach (Node node in GameMode.movement.nodes)
+            {
+                if (path.Contains(node))
+                    node.color = Color.Blue;
+                else
+                    node.color = Color.Red;
+            }
         }
 
         #endregion

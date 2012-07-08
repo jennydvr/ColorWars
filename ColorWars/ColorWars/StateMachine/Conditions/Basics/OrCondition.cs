@@ -34,9 +34,9 @@
             this.second = second;
         }
 
-        public override bool test()
+        public override bool Test()
         {
-            return first.test() | second.test();
+            return first.Test() | second.Test();
         }
 
         #endregion

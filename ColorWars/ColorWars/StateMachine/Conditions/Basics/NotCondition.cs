@@ -27,9 +27,9 @@
             this.condition = condition;
         }
 
-        public override bool test()
+        public override bool Test()
         {
-            return !condition.test();
+            return !condition.Test();
         }
 
         #endregion

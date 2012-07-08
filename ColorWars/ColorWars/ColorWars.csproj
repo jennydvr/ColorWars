@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\Blendings\BlendingBehavior.cs" />
     <Compile Include="Behaviors\Blendings\CarefullyPursue.cs" />
+    <Compile Include="Behaviors\Blendings\SmellCatch.cs" />
     <Compile Include="Behaviors\Blendings\FleeDisappear.cs" />
     <Compile Include="Behaviors\Blendings\SmartEvade.cs" />
     <Compile Include="Behaviors\Blendings\StarCatch.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Behaviors\Match\VelocityMatch.cs" />
     <Compile Include="Behaviors\Others\Wander.cs" />
     <Compile Include="Characters\Character.cs" />
+    <Compile Include="Characters\Thinner.cs" />
     <Compile Include="Characters\Enemy.cs" />
     <Compile Include="Characters\EnemyDebug.cs" />
     <Compile Include="Characters\Kinematic.cs" />
@@ -149,14 +151,23 @@
     <Compile Include="Game.cs" />
     <Compile Include="Characters\SteeringOutput.cs" />
     <Compile Include="ScreenFactory.cs" />
-    <Compile Include="StateMachine\BasicMachine.cs" />
+    <Compile Include="Sensors\Sensor.cs" />
+    <Compile Include="Sensors\Signal\Scent.cs" />
+    <Compile Include="Sensors\Signal\Signal.cs" />
+    <Compile Include="Sensors\Smell.cs" />
+    <Compile Include="StateMachine\BasicStarMachine.cs" />
     <Compile Include="StateMachine\Conditions\Basics\AndCondition.cs" />
     <Compile Include="StateMachine\Conditions\Condition.cs" />
     <Compile Include="StateMachine\Conditions\Basics\NotCondition.cs" />
     <Compile Include="StateMachine\Conditions\Basics\OrCondition.cs" />
     <Compile Include="StateMachine\Conditions\DeadCondition.cs" />
     <Compile Include="StateMachine\Conditions\LowLifeCondition.cs" />
+    <Compile Include="StateMachine\BasicPursueMachine.cs" />
+    <Compile Include="StateMachine\States\ChaseLifeState.cs" />
     <Compile Include="StateMachine\States\DeadState.cs" />
+    <Compile Include="StateMachine\States\StarState.cs" />
+    <Compile Include="StateMachine\BasicMachine.cs" />
+    <Compile Include="StateMachine\Transitions\NotSmellTransition.cs" />
     <Compile Include="StateMachine\Transitions\DeadTransition.cs" />
     <Compile Include="StateMachine\Transitions\HighLifeTransition.cs" />
     <Compile Include="StateMachine\Transitions\LowLifeTransition.cs" />
@@ -164,8 +175,11 @@
     <Compile Include="StateMachine\States\PursueState.cs" />
     <Compile Include="StateMachine\States\State.cs" />
     <Compile Include="StateMachine\StateMachine.cs" />
+    <Compile Include="StateMachine\Transitions\SmellTransition.cs" />
     <Compile Include="StateMachine\Transitions\Transition.cs" />
     <Compile Include="World\Background.cs" />
+    <Compile Include="World\Buttons\ArcButton.cs" />
+    <Compile Include="World\Buttons\SaveVisionButton.cs" />
     <Compile Include="World\Buttons\NodesButton.cs" />
     <Compile Include="World\Buttons\PolygonButton.cs" />
     <Compile Include="World\Graph\AStar.cs" />

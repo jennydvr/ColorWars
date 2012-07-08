@@ -3,6 +3,7 @@ using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace ColorWars
 {
@@ -19,33 +20,41 @@ namespace ColorWars
         static public List<Enemy> squorres;
        
         // Other stuff
-        protected ContentManager content;
+        static public ContentManager content;
+        static public Random random = new Random();
 
-        // Stuff for the graph
+        // Stuff for the graphs
         static public List<Polygon> polygons = new List<Polygon>();
-        static public Graph graph = new Graph();
+        static public Graph movement = new Graph();
+        static public Graph smells = new Graph();
+
+        // Timer for thinner balls
+        protected float timer = 0;
+        protected float interval = 10000;
 
         #endregion
 
         #region Initialization
 
-        public GameMode(ContentManager content)
+        public GameMode(ContentManager c)
         {
             // Initialize stuff
             background = new Background();
             obstacles = new List<Obstacle>();
             squorres = new List<Enemy>();
 
-            this.content = content;
-
+            content = c;
         }
 
         public virtual void LoadContent()
         {
             ReadXML();
 
-            // Finally create the graph
-            graph = new Graph();
+            // Finally create the movement graph
+            movement.PolygonsInitialize();
+
+            // Now the smell graph
+            smells.FileInitialize("\\\\psf\\Home\\Documents\\Lenguajes\\C#\\ColorWars\\ColorWars\\ColorWarsContent\\olor.xml");
 
             // Load obstacles
             foreach (Obstacle obstacle in obstacles)
@@ -141,13 +150,25 @@ namespace ColorWars
             // Update paintballs
             foreach (Paintball ball in CollisionDetector.balls)
                 ball.Update(time);
-
             CollisionDetector.balls.RemoveAll(NotActivated);
 
+            // Update player
             dotty.Update(time);
 
+            // Update enemies
             foreach (Enemy squorre in squorres)
                 squorre.Update(time, dotty.kinematic.Clone());
+
+            // Update thinner balls
+            foreach (Thinner ball in CollisionDetector.thinners)
+                ball.Update(time);
+            CollisionDetector.thinners.RemoveAll(NotActivated);
+
+            // Put a thinner ball
+            AddThinnerball(time);
+
+            // Update the signals in the smells graph
+            smells.Update(time);
         }
 
         public virtual void Draw(SpriteBatch batch)
@@ -158,6 +179,10 @@ namespace ColorWars
 
             // Draw paintballs
             foreach (Paintball ball in CollisionDetector.balls)
+                ball.Draw(batch);
+
+            // Draw thinner balls
+            foreach (Thinner ball in CollisionDetector.thinners)
                 ball.Draw(batch);
 
             // Draw dotty
@@ -171,21 +196,39 @@ namespace ColorWars
             for (int i = 0; i != polygons.Count; ++i)
                 polygons[i].Draw(batch, i, content);
 
-            graph.Draw(content, batch);
-        }
-
-        protected bool NotActivated(Paintball ball)
-        {
-            return !ball.activated;
+           // movement.Draw(content, batch);
+            smells.Draw(content, batch);
         }
 
         #endregion
 
         #region Auxiliar methods
+        
+        protected bool NotActivated(Paintball ball)
+        {
+            return !ball.activated;
+        }
+
+        protected bool NotActivated(Thinner ball)
+        {
+            return !ball.activated;
+        }
 
         public virtual void AddEnemy(float x, float y)
         {
             squorres.Add(new Enemy(x, y));
+        }
+
+        protected void AddThinnerball(GameTime time)
+        {
+            timer += (float)time.ElapsedGameTime.TotalMilliseconds;
+
+            if (timer > interval)
+            {
+                // Put a thinner ball
+                CollisionDetector.thinners.Add(new Thinner(content));
+                timer = 0;
+            }
         }
 
         #endregion

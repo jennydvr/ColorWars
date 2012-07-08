@@ -12,6 +12,8 @@
 
             // And now initialize the transitions
             transitions.Add(new DeadTransition(character));
+            transitions.Add(new SmellTransition(character));
+            transitions.Add(new HighLifeTransition(character));
         }
 
         #endregion

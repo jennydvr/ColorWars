@@ -11,7 +11,7 @@
         public LowLifeTransition(Character character) :
             base(character)
         {
-            this.targetState = new EvadeState(character);
+            this.targetState = 1;
             this.condition = new LowLifeCondition(character);
         }
 

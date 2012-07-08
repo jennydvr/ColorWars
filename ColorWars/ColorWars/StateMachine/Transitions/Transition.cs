@@ -10,7 +10,7 @@
         /// <summary>
         /// Target state of this transition
         /// </summary>
-        protected State targetState;
+        protected int targetState;
 
         /// <summary>
         /// Condition to check
@@ -39,7 +39,7 @@
         /// Gets the target state
         /// </summary>
         /// <returns>The target state of this transition</returns>
-        public State getTargetState()
+        public int getTargetState()
         {
             return targetState;
         }
@@ -50,7 +50,7 @@
         /// <returns>True if activated, false otherwise</returns>
         public bool isTriggered()
         {
-            return condition.test();
+            return condition.Test();
         }
 
         #endregion
