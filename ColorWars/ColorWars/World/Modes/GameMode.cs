@@ -192,7 +192,6 @@ namespace ColorWars
             foreach (Enemy squorre in squorres)
                 squorre.Draw(batch);
 
-
             // Draw signals
             for (int i = 0; i != smells.nodes.Count; ++i)
                 for (int j = 0; j != smells.nodes[i].signals.Count; ++j)

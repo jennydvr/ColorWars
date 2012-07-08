@@ -45,8 +45,7 @@ namespace ColorWars
             base.Update();
             
             // The follow path needs a target
-            Kinematic kinematic = new Kinematic();
-            kinematic.position = new Vector3(owner.sensors[0].origin.point.X, owner.sensors[0].origin.point.Y, 0);
+            Kinematic kinematic = owner.sensors[0].origin;
 
             blending.behaviors[1].behavior.Initialize(kinematic, target);
         }

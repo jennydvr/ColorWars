@@ -18,9 +18,9 @@ namespace ColorWars
         protected Graph graph;
 
         /// <summary>
-        /// Origin node
+        /// Origin of the signal
         /// </summary>
-        public Node origin;
+        public Kinematic origin;
 
         #endregion
 

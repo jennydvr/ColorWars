@@ -23,19 +23,28 @@
             Node node = GetNearestNode(character.kinematic);
 
             // Check if the node contains any smell signal
-            foreach (Signal signal in node.signals)
+            for (int i = 0; i != node.signals.Count; ++i)
+            {
+                Signal signal = node.signals[i];
+
+                // If there is, check if there are any particles around us
                 if (signal is Scent)
                 {
-                    activated = true;
+                    for (int j = 0; j != signal.points.Count; ++j)
+                    {
+                        Particle particle = signal.points[j];
 
-                    // If the origin is null, the signal is in our same polygon
-                    if (signal.origin == null)
-                        origin = node;
-                    else
-                        origin = signal.origin;
-
-                    return;
+                        // If there is a particle near us, follow its origin
+                        if ((character.kinematic.position - particle.origin.position).Length() <= 100)
+                        {
+                            activated = true;
+                            origin = particle.origin.Clone();
+                            return;
+                        }
+                    }
                 }
+
+            }
             
             // Else, deactivate the sensor
             activated = false;

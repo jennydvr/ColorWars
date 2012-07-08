@@ -29,6 +29,10 @@ namespace ColorWars
         {
             this.graph = GameMode.smells;
             this.location = graph.nodes[id].point;
+
+            // If the origin is null, you are generating the smell
+            if (this.origin == null)
+                this.origin = graph.nodes[id];
             
             // The factor will be the inverse of the maximum cost
             maximum = 0;

@@ -71,7 +71,7 @@ namespace ColorWars
         /// <summary>
         /// List of points to draw, surrounding the signal
         /// </summary>
-        protected List<Particle> points = new List<Particle>();
+        public List<Particle> points = new List<Particle>();
 
         /// <summary>
         /// Order of calling of the signal
@@ -98,13 +98,10 @@ namespace ColorWars
             this.order = order;
             this.origin = origin;
 
-            // If origin is null, you are generating the smell
-
             // Set timers
             this.startInterval = 50 * order * (1 - intensity);
             this.endInterval = MathHelper.Min(maxtime, maxtime * intensity * 3.5f);
             this.timer = 0;
-
         }
 
         #endregion
@@ -117,43 +114,59 @@ namespace ColorWars
         /// <param name="time">Elapsed game time</param>
         public void Update(GameTime time)
         {
-            // Update timer
-            timer += (float)time.ElapsedGameTime.TotalMilliseconds;
-
-            if (startInterval != -1)
+            // Only update if the parent signal is still alive, else, kill this signal
+            if (origin.signals.Count > 0)
             {
-                // Add the signal
-                if (timer > startInterval)
+                // Update timer
+                timer += (float)time.ElapsedGameTime.TotalMilliseconds;
+
+                if (startInterval != -1)
                 {
-                    activated = true;
-                    startInterval = -1;
-                    timer = 0;
+                    // Add the signal
+                    if (timer > startInterval)
+                    {
+                        activated = true;
+                        startInterval = -1;
+                        timer = 0;
+                    }
+                }
+                else if (endInterval != -1)
+                {
+                    // Remove the signal
+                    if (timer > endInterval)
+                    {
+                        activated = false;
+                        endInterval = -1;
+                        timer = 0;
+
+                        // Remove particles
+                        points.Clear();
+                    }
                 }
             }
-            else if (endInterval != -1)
+            else
             {
-                // Remove the signal
-                if (timer > endInterval)
-                {
-                    activated = false;
-                    endInterval = -1;
-                    timer = 0;
+                activated = false;
+                endInterval = -1;
+                timer = 0;
 
-                    // Remove particles
-                    points.Clear();
-                }
+                // Remove particles
+                points.Clear();
             }
 
             // Update the particles
             if (activated)
             {
                 // Add a little more
-                for (int i = 0; i != (int)(2 * intensity); ++i)
+                for (int i = 0; i != (int)(10 * intensity); ++i)
                     points.Add(new Particle(this));
 
                 // Update each
                 foreach (Particle point in points)
                     point.Update(time);
+
+                // Remove dead-particles
+                points.RemoveAll(NotActivated);
             }
         }
 
@@ -166,6 +179,20 @@ namespace ColorWars
         {
             foreach (Particle point in points)
                 point.Draw(content, batch);
+        }
+
+        #endregion
+
+        #region Auxiliars
+
+        /// <summary>
+        /// Checks if a particle is activated
+        /// </summary>
+        /// <param name="particle">Particle</param>
+        /// <returns>True if activated, false otherwise</returns>
+        protected bool NotActivated(Particle particle)
+        {
+            return particle.done;
         }
 
         #endregion
