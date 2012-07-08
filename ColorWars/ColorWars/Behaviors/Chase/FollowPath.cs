@@ -100,22 +100,13 @@ namespace ColorWars
 
         protected Polygon GetPolygon(Kinematic character)
         {
-            float min = float.PositiveInfinity;
-            Polygon polygon = new Polygon(new List<Vector2>());
             Vector2 vect = new Vector2(character.position.X, character.position.Y);
 
             foreach (Polygon poly in GameMode.polygons)
-            {
-                float diff = Vector2.Distance(poly.center, vect);
+                if (poly.Contains(vect))
+                    return poly;
 
-                if (poly.Contains(vect) && diff < min)
-                {
-                    min = diff;
-                    polygon = poly;
-                }
-            }
-
-            return polygon;
+            return new Polygon(new List<Vector2>());
         }
 
         #endregion

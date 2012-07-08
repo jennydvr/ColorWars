@@ -12,7 +12,7 @@ namespace ColorWars
         protected const string ASSET = "ball";
         protected const int WIDTH = 5;
         protected const int HEIGHT = 5;
-        protected int MAX_SPEED = 30;
+        protected int MAX_SPEED = 50;
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace ColorWars
         /// <summary>
         /// Target node of the signal
         /// </summary>
-        protected Kinematic target = new Kinematic();
+        public Kinematic target = new Kinematic();
 
         /// <summary>
         /// Behavior
@@ -54,7 +54,7 @@ namespace ColorWars
             origin.position = new Vector3(signal.origin.point.X, signal.origin.point.Y, 0);
             target.position = new Vector3(signal.location.X, signal.location.Y, 0);
 
-            // Now move the origin and the speed little
+            // Now move the origin a little
             int alpha = GameMode.random.Next(10, 50);
             int beta = GameMode.random.Next(10, 50);
 
@@ -62,6 +62,15 @@ namespace ColorWars
             float y = (float)GameMode.random.NextDouble() * 2 * beta - beta;
 
             origin.position += new Vector3(x, y, 0);
+
+            // And now the target
+            alpha = GameMode.random.Next(0, 100);
+            beta = GameMode.random.Next(0, 100);
+
+            x = (float)GameMode.random.NextDouble() * 2 * alpha - alpha;
+            y = (float)GameMode.random.NextDouble() * 2 * beta - beta;
+
+            target.position += new Vector3(x, y, 0);
         }
 
         #endregion

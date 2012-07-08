@@ -1,4 +1,6 @@
-﻿namespace ColorWars
+﻿using Microsoft.Xna.Framework;
+
+namespace ColorWars
 {
     class Smell : Sensor
     {
@@ -21,6 +23,7 @@
         public override void Detect()
         {
             Node node = GetNearestNode(character.kinematic);
+            Vector3 squorre = character.kinematic.position;
 
             // Check if the node contains any smell signal
             for (int i = 0; i != node.signals.Count; ++i)
@@ -33,12 +36,21 @@
                     for (int j = 0; j != signal.points.Count; ++j)
                     {
                         Particle particle = signal.points[j];
+                        float newdiff = (squorre - particle.target.position).Length();
 
                         // If there is a particle near us, follow its origin
-                        if ((character.kinematic.position - particle.origin.position).Length() <= 100)
+                        if (newdiff <= 200)
                         {
-                            activated = true;
-                            origin = particle.origin.Clone();
+                            if (!activated)
+                            {
+                                activated = true;
+                                origin = particle.origin.Clone();
+                            }
+                            else if (activated & newdiff < (squorre - origin.position).Length())
+                            {
+                                origin = particle.origin.Clone();
+                            }
+
                             return;
                         }
                     }
@@ -49,7 +61,7 @@
             // Else, deactivate the sensor
             activated = false;
         }
-        
+
         #endregion
     }
 }
