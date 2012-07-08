@@ -44,7 +44,7 @@ namespace ColorWars
         {
             base.Update();
             
-            // The follow needs a target
+            // The follow path needs a target
             Kinematic kinematic = new Kinematic();
             kinematic.position = new Vector3(owner.sensors[0].origin.point.X, owner.sensors[0].origin.point.Y, 0);
 

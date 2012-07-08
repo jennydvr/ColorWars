@@ -35,6 +35,11 @@ namespace ColorWars
         /// </summary>
         protected const float timeToTarget = 0.1f;
 
+        /// <summary>
+        /// Radius for stopping the movement
+        /// </summary>
+        public int endingRadius = 70;
+
         #endregion
 
         #region Methods
@@ -42,7 +47,7 @@ namespace ColorWars
         public override SteeringOutput GetSteering()
         {
             // If the target was reached, stop your movement
-            if ((character.position - target.position).Length() <= 70)
+            if ((character.position - target.position).Length() <= endingRadius)
             {
                 character.velocity = Vector3.Zero;
                 character.rotation = 0;
@@ -55,7 +60,7 @@ namespace ColorWars
         public override SteeringOutput GetSteering(Kinematic character, Kinematic target)
         {
             // If the target was reached, stop your movement
-            if ((character.position - target.position).Length() <= 70)
+            if ((character.position - target.position).Length() <= endingRadius)
             {
                 character.velocity = Vector3.Zero;
                 character.rotation = 0;

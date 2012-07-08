@@ -137,6 +137,7 @@
     <Compile Include="Behaviors\Match\VelocityMatch.cs" />
     <Compile Include="Behaviors\Others\Wander.cs" />
     <Compile Include="Characters\Character.cs" />
+    <Compile Include="Characters\Particle.cs" />
     <Compile Include="Characters\Thinner.cs" />
     <Compile Include="Characters\Enemy.cs" />
     <Compile Include="Characters\EnemyDebug.cs" />

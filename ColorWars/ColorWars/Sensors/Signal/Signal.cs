@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace ColorWars
 {
@@ -31,6 +34,11 @@ namespace ColorWars
         public Node origin;
 
         /// <summary>
+        /// Location of this signal
+        /// </summary>
+        public Vector2 location;
+
+        /// <summary>
         /// Intensity of the signal
         /// </summary>
         public float intensity;
@@ -60,6 +68,16 @@ namespace ColorWars
         /// </summary>
         public bool activated;
 
+        /// <summary>
+        /// List of points to draw, surrounding the signal
+        /// </summary>
+        protected List<Particle> points = new List<Particle>();
+
+        /// <summary>
+        /// Order of calling of the signal
+        /// </summary>
+        protected int order;
+
         #endregion
 
         #region Constructor
@@ -70,20 +88,28 @@ namespace ColorWars
         /// <param name="id">ID of the node this signal belongs to</param>
         /// <param name="intensity">Intensity of the signal</param>
         /// <param name="origin">Origin of this signal</param>
-        public Signal(int id, float intensity, Node origin)
+        /// <param name="order">When was this parameter called</param>
+        public Signal(int id, float intensity, Node origin, int order)
         {
+            // Set propagation stuff
             this.id = id;
             this.intensity = intensity;
-            this.startInterval = 500 * (1 - intensity);
-            this.endInterval = MathHelper.Min(maxtime, maxtime * intensity * 3.5f);
-            this.origin = origin;
             this.activated = false;
+            this.order = order;
+            this.origin = origin;
+
+            // If origin is null, you are generating the smell
+
+            // Set timers
+            this.startInterval = 50 * order * (1 - intensity);
+            this.endInterval = MathHelper.Min(maxtime, maxtime * intensity * 3.5f);
             this.timer = 0;
+
         }
 
         #endregion
 
-        #region Update
+        #region Update and Draw
 
         /// <summary>
         /// Updates the time of this signal
@@ -91,6 +117,7 @@ namespace ColorWars
         /// <param name="time">Elapsed game time</param>
         public void Update(GameTime time)
         {
+            // Update timer
             timer += (float)time.ElapsedGameTime.TotalMilliseconds;
 
             if (startInterval != -1)
@@ -111,8 +138,34 @@ namespace ColorWars
                     activated = false;
                     endInterval = -1;
                     timer = 0;
+
+                    // Remove particles
+                    points.Clear();
                 }
             }
+
+            // Update the particles
+            if (activated)
+            {
+                // Add a little more
+                for (int i = 0; i != (int)(2 * intensity); ++i)
+                    points.Add(new Particle(this));
+
+                // Update each
+                foreach (Particle point in points)
+                    point.Update(time);
+            }
+        }
+
+        /// <summary>
+        /// Draws the propagation of a signal
+        /// </summary>
+        /// <param name="content">Content manager</param>
+        /// <param name="batch">Sprite batch</param>
+        public void Draw(ContentManager content, SpriteBatch batch)
+        {
+            foreach (Particle point in points)
+                point.Draw(content, batch);
         }
 
         #endregion

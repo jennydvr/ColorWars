@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ColorWars
 {
@@ -20,10 +23,12 @@ namespace ColorWars
         /// </summary>
         /// <param name="id">ID of the node</param>
         /// <param name="intensity">Intensity</param>
-        public Scent(int id, float intensity, Node origin)
-            : base(id, intensity, origin)
+        /// <param name="order">When was this parameter called</param>
+        public Scent(int id, float intensity, Node origin, int order)
+            : base(id, intensity, origin, order)
         {
             this.graph = GameMode.smells;
+            this.location = graph.nodes[id].point;
             
             // The factor will be the inverse of the maximum cost
             maximum = 0;
@@ -34,8 +39,6 @@ namespace ColorWars
                         maximum = graph.arcs[i, j];
 
             this.factor = maximum * 0.125f;
-
-            Gearset.GS.Show("factor", factor);
         }
 
         #endregion
@@ -64,12 +67,13 @@ namespace ColorWars
                 
                 foreach (Scent scent in graph.nodes[i].signals)
                 {
+                    // If there is a scent with less intensity, replace it
                     if (scent.intensity < newIntensity)
                     {
                         scent.intensity = newIntensity;
-                        scent.endInterval = maxtime * newIntensity;
-                        scent.Propagate();
+                        scent.endInterval = maxtime * newIntensity * 3.5f;
                         scent.origin = graph.nodes[id];
+                        scent.Propagate();
                     }
 
                     ok = false;
@@ -78,7 +82,7 @@ namespace ColorWars
                 // If there wasn't a scent in the node, add one
                 if (ok)
                 {
-                    Scent s = new Scent(i, newIntensity, graph.nodes[id]);
+                    Scent s = new Scent(i, newIntensity, graph.nodes[id], i);
                     graph.nodes[i].AddSignal(s);
                     s.Propagate();
                 }

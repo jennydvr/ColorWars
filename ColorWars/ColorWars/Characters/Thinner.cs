@@ -41,7 +41,7 @@ namespace ColorWars
             bound = new BoundingSphere(position, Math.Max(texture.Height, texture.Width));
 
             // Add a scent to the graph
-            Scent s = new Scent(id, 1, null);
+            Scent s = new Scent(id, 1, null, 0);
             GameMode.smells.nodes[id].AddSignal(s);
             s.Propagate();
         }
