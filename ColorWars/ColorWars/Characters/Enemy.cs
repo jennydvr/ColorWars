@@ -9,7 +9,7 @@ namespace ColorWars
         #region Constants
 
         protected const string ASSETNAME = "Characters/Squorre";
-        protected int MAX_SPEED = 150;
+        protected int MAX_SPEED = 100;
 
         #endregion
 
@@ -75,6 +75,10 @@ namespace ColorWars
             // Update kinematics
             UpdateKinematics(time, target);
 
+            // Increase life a little bit
+            if (life < 25)
+                life += 0.005f;
+
             base.Update();
 
             CollisionDetector.players.Add(bound);
@@ -93,13 +97,26 @@ namespace ColorWars
             foreach (Sensor sensor in sensors)
                 sensor.Detect();
 
+            // If the character is close enough, throw a paintball
+            UpdatePaintballs(time);
+
             // If the character is moving, animate it
             if (kinematic.velocity.Length() > 0)
                 AnimateWalk(time);
 
-
             foreach (Sensor sensor in sensors)
                 Gearset.GS.Show("Sensor", sensor.Test());
+        }
+
+        private void UpdatePaintballs(GameTime time)
+        {
+            balltimer += (float)time.ElapsedGameTime.TotalMilliseconds;
+
+            if (balltimer > ballinterval & (kinematic.position - GameMode.dotty.kinematic.position).Length() <= 100)
+            {
+                CollisionDetector.balls.Add(new Paintball(content, kinematic.Clone(), Color.White));
+                balltimer = 0;
+            }
         }
 
         #endregion

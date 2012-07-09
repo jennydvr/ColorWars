@@ -12,10 +12,10 @@
         {
             // Create the blending behaviors
             BehaviorAndWeight a = new BehaviorAndWeight(new LookWhereYoureGoing(), 1);
-            BehaviorAndWeight b = new BehaviorAndWeight(new FollowPath(), 1.5f);
-            BehaviorAndWeight c = new BehaviorAndWeight(new AvoidBullets(), 3);
-            BehaviorAndWeight d = new BehaviorAndWeight(new ObstacleAvoidance(), 0.5f);
-            BehaviorAndWeight e = new BehaviorAndWeight(new FriendsAvoidance(owner), 2);
+            BehaviorAndWeight b = new BehaviorAndWeight(new AvoidBullets(), 3);
+            BehaviorAndWeight c = new BehaviorAndWeight(new ObstacleAvoidance(), 0.5f);
+            BehaviorAndWeight d = new BehaviorAndWeight(new FriendsAvoidance(owner), 2);
+            BehaviorAndWeight e = new BehaviorAndWeight(new FollowPath(), 1.5f);
 
             // Add them to the list
             blending.behaviors.Add(a);
@@ -34,7 +34,7 @@
             base.Update();
             
             // The follow needs a target
-            blending.behaviors[1].behavior.Initialize(character, target);
+            blending.behaviors[4].behavior.Initialize(character, target);
         }
 
         #endregion

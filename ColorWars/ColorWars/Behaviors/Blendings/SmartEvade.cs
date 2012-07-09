@@ -1,4 +1,5 @@
-﻿namespace ColorWars
+﻿using Microsoft.Xna.Framework;
+namespace ColorWars
 {
     class SmartEvade : BlendingBehavior
     {
@@ -23,9 +24,12 @@
 
             // Create the blending behaviors
             BehaviorAndWeight a = new BehaviorAndWeight(new LookWhereYoureGoing(), 1);
-            BehaviorAndWeight b = new BehaviorAndWeight(new Evade(), 1);
-            BehaviorAndWeight c = new BehaviorAndWeight(new ObstacleAvoidance(), 1.75f);
-            BehaviorAndWeight d = new BehaviorAndWeight(new FriendsAvoidance(owner), 1.75f);
+            BehaviorAndWeight b = new BehaviorAndWeight(new ObstacleAvoidance(), 0.5f);
+            BehaviorAndWeight c = new BehaviorAndWeight(new FriendsAvoidance(owner), 2);
+
+            FollowPath f = new FollowPath();
+            f.heuristic = 'c';
+            BehaviorAndWeight d = new BehaviorAndWeight(f, 1.5f);
 
             // Add them to the list
             blending.behaviors.Add(a);
@@ -42,8 +46,25 @@
         {
             base.Update();
 
+            // Choose the waypoint with the highest value
+            float max = 0;
+            Kinematic w = new Kinematic();
+
+            foreach (Waypoint waypoint in GameMode.waypoints)
+            {
+                float val = waypoint.Value(GameMode.dotty.kinematic, character);
+
+                if (val > max)
+                {
+                    max = val;
+                    w = waypoint.kinematic.Clone();
+                }
+            }
+
+            Gearset.GS.ShowMark("waypoint", new Microsoft.Xna.Framework.Vector2(w.position.X, w.position.Y));
+
             // The evade needs a target
-            blending.behaviors[1].behavior.Initialize(character, target);
+            blending.behaviors[3].behavior.Initialize(character, w);
         }
 
         #endregion

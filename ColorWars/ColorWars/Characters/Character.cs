@@ -140,22 +140,14 @@ namespace ColorWars
         {
             // Decrease life
             if (life > 0 & CollisionDetector.CheckPaintballsCollisions(bound, lifeColor))
-                life -= 0.4f;
+                life -= 0.5f;
 
             // Increase life
             if (life < 100 & CollisionDetector.CheckThinnerballsCollisions(bound))
-                life += 20;
-        }
+                life += 30;
 
-        private void UpdatePaintballs(GameTime time)
-        {
-            balltimer += (float)time.ElapsedGameTime.TotalMilliseconds;
-
-            if (balltimer > ballinterval)
-            {
-                CollisionDetector.balls.Add(new Paintball(content, kinematic.Clone(), lifeColor));
-                balltimer = 0;
-            }
+            life = (life > 100) ? 100 : life;
+            life = (life < 0) ? 0 : life;
         }
 
         #endregion

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<waypoints>
+  <waypoint>
+    <x>48</x>
+    <y>397</y>
+  </waypoint>
+  <waypoint>
+    <x>287</x>
+    <y>163</y>
+  </waypoint>
+  <waypoint>
+    <x>197</x>
+    <y>453</y>
+  </waypoint>
+  <waypoint>
+    <x>328</x>
+    <y>329</y>
+  </waypoint>
+  <waypoint>
+    <x>801</x>
+    <y>550</y>
+  </waypoint>
+  <waypoint>
+    <x>794</x>
+    <y>307</y>
+  </waypoint>
+</waypoints>

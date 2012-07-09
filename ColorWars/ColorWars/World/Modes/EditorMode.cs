@@ -33,6 +33,8 @@ namespace ColorWars
         NodesButton nButton;
         ArcButton aButton;
         SaveVisionButton visButton;
+        SaveWaypointsButton saveWayButton;
+        WaypointButton wayButton;
 
         // Other stuff
         MouseState previousMouseState;
@@ -48,7 +50,9 @@ namespace ColorWars
             Node,
             Save,
             Arc,
-            SaveVision
+            SaveVision,
+            SaveWaypoints,
+            Waypoint
         }
         State currentState = State.None;
 
@@ -74,11 +78,13 @@ namespace ColorWars
             aButton = new ArcButton(content, new Vector2(400, 50));
             saButton = new SaveButton(content, new Vector2(450, 50));
             visButton = new SaveVisionButton(content, new Vector2(500, 50));
+            saveWayButton = new SaveWaypointsButton(content, new Vector2(550, 50));
+            wayButton = new WaypointButton(content, new Vector2(600, 50));
         }
 
         public override void LoadContent()
         {
-            ReadXML();
+            ReadMovement();
 
             // Fill the nodes
             for (int i = 0; i != polygons.Count; ++i)
@@ -144,6 +150,11 @@ namespace ColorWars
             foreach (Point node in nodes)
                 node.Draw(content, batch);
 
+            // Draw waypoints
+            int id = 0;
+            foreach (Waypoint w in waypoints)
+                w.Draw(content, batch, ++id);
+
             // Draw graph
             movement.Draw(content, batch);
 
@@ -156,6 +167,8 @@ namespace ColorWars
             nButton.Draw(batch);
             aButton.Draw(batch);
             visButton.Draw(batch);
+            saveWayButton.Draw(batch);
+            wayButton.Draw(batch);
 
             // Show state
             Gearset.GS.Show("Estado", currentState);
@@ -190,6 +203,10 @@ namespace ColorWars
                 currentState = State.Arc;
             else if (visButton.IsClicked(currentMouseState))
                 currentState = State.SaveVision;
+            else if (saveWayButton.IsClicked(currentMouseState))
+                currentState = State.SaveWaypoints;
+            else if (wayButton.IsClicked(currentMouseState))
+                currentState = State.Waypoint;
         }
 
         protected void Action(MouseState currentMouseState)
@@ -210,6 +227,10 @@ namespace ColorWars
                 UpdateButton(aButton, currentMouseState);
             else if (OnlyPressedButtonIs(visButton, currentMouseState) & currentState == State.Arc)
                 UpdateButton(visButton, currentMouseState);
+            else if (OnlyPressedButtonIs(saveWayButton, currentMouseState) & currentState == State.SaveWaypoints)
+                UpdateButton(saveWayButton, currentMouseState);
+            else if (OnlyPressedButtonIs(wayButton, currentMouseState) & currentState == State.Waypoint)
+                UpdateButton(wayButton, currentMouseState);
         }
 
         protected void UpdateButton(Button button, MouseState currentMouseState)
@@ -232,6 +253,8 @@ namespace ColorWars
             list.Add(aButton);
             list.Add(saButton);
             list.Add(visButton);
+            list.Add(saveWayButton);
+            list.Add(wayButton);
 
             foreach (Button other in list)
                 if (!button.GetType().Equals(other.GetType()) && other.IsClicked(currentMouseState))

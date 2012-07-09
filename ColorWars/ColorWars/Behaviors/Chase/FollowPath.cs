@@ -17,6 +17,11 @@ namespace ColorWars
         /// </summary>
         Polygon lastPolygon = new Polygon(new List<Vector2>());
 
+        /// <summary>
+        /// Heuristic to use
+        /// </summary>
+        public char heuristic = 'c';
+
         #endregion
 
         #region Methods
@@ -29,7 +34,15 @@ namespace ColorWars
             {
                 // Generate a new path
                 AStar star = new AStar(GameMode.movement);
-                path = star.Pathfind(GetNearestNode(character), GetNearestNode(target));
+
+                Node c = GetNearestNode(character);
+                Node t = GetNearestNode(target);
+
+                if (heuristic == 's')
+                    path = star.Pathfind(c, t, new SafestHeuristic(t));
+                else
+                    path = star.Pathfind(c, t, new ClosestHeuristic(t));
+
                 lastPolygon = targetPolygon;
             }
 
@@ -44,7 +57,15 @@ namespace ColorWars
             {
                 // Generate a new path
                 AStar star = new AStar(GameMode.movement);
-                path = star.Pathfind(GetNearestNode(character), GetNearestNode(target));
+
+                Node c = GetNearestNode(character);
+                Node t = GetNearestNode(target);
+
+                if (heuristic == 's')
+                    path = star.Pathfind(c, t, new SafestHeuristic(t));
+                else
+                    path = star.Pathfind(c, t, new ClosestHeuristic(t));
+
                 lastPolygon = targetPolygon;
             }
 

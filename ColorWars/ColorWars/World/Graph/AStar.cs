@@ -21,11 +21,11 @@ namespace ColorWars
             this.graph = graph;
         }
 
-        private void Initialize(Node start, Node goal)
+        private void Initialize(Node start, Node goal, Heuristic h)
         {
             open = new List<Node>();
             closed = new List<Node>();
-            heuristic = new Heuristic(goal);
+            heuristic = h;
 
             gScore = new float[GameMode.movement.nodes.Count];
             fScore = new float[GameMode.movement.nodes.Count];
@@ -36,9 +36,9 @@ namespace ColorWars
             fScore[start.id] = heuristic.estimate(start);
         }
 
-        public List<Node> Pathfind(Node start, Node goal)
+        public List<Node> Pathfind(Node start, Node goal, Heuristic h)
         {
-            Initialize(start, goal);
+            Initialize(start, goal, h);
 
             // Iterate through processing each node
             while (open.Count > 0)

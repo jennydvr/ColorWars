@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Microsoft.Xna.Framework.Input;
 
 namespace ColorWars
 {
@@ -22,9 +23,13 @@ namespace ColorWars
         // Other stuff
         static public ContentManager content;
         static public Random random = new Random();
+        static SpriteFont font;
+        static int score = 0;
+        static int state = 0;
 
         // Stuff for the graphs
         static public List<Polygon> polygons = new List<Polygon>();
+        static public List<Waypoint> waypoints = new List<Waypoint>();
         static public Graph movement = new Graph();
         static public Graph smells = new Graph();
 
@@ -48,7 +53,10 @@ namespace ColorWars
 
         public virtual void LoadContent()
         {
-            ReadXML();
+            font = content.Load<SpriteFont>("Fonts/gameFont");
+
+            ReadMovement();
+            ReadWaypoints();
 
             // Finally create the movement graph
             movement.PolygonsInitialize();
@@ -68,7 +76,7 @@ namespace ColorWars
                 squorre.LoadContent(content);
         }
 
-        public void ReadXML()
+        public void ReadMovement()
         {
             // The file:
             string filename = "\\\\psf\\Home\\Documents\\Lenguajes\\C#\\ColorWars\\ColorWars\\ColorWarsContent\\mapa.xml";
@@ -141,6 +149,30 @@ namespace ColorWars
 
         }
 
+        public void ReadWaypoints()
+        {
+            // The file:
+            string filename = "\\\\psf\\Home\\Documents\\Lenguajes\\C#\\ColorWars\\ColorWars\\ColorWarsContent\\waypoints.xml";
+
+            // Open the document
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(filename);
+
+            // waypoints tag
+            XmlNodeList list = xDoc.GetElementsByTagName("waypoints");
+            list = ((XmlElement)list[0]).GetElementsByTagName("waypoint");
+
+            foreach (XmlElement nodo in list)
+            {
+                XmlNodeList lx = nodo.GetElementsByTagName("x");
+                XmlNodeList ly = nodo.GetElementsByTagName("y");
+                float x = System.Convert.ToSingle(lx[0].InnerText);
+                float y = System.Convert.ToSingle(ly[0].InnerText);
+
+                waypoints.Add(new Waypoint(new Vector2(x, y)));
+            }
+        }
+
         #endregion
 
         #region Update and Draw
@@ -159,6 +191,8 @@ namespace ColorWars
             foreach (Enemy squorre in squorres)
                 squorre.Update(time, dotty.kinematic.Clone());
 
+            squorres.RemoveAll(Dead);
+
             // Update thinner balls
             foreach (Thinner ball in CollisionDetector.thinners)
                 ball.Update(time);
@@ -169,6 +203,15 @@ namespace ColorWars
 
             // Update the signals in the smells graph
             smells.Update(time);
+
+            // Update what to show
+            KeyboardState keyboard = Keyboard.GetState();
+            if (keyboard.IsKeyDown(Keys.D1))
+                state = 1;  // Show movement graph and waypoints
+            else if (keyboard.IsKeyDown(Keys.D2))
+                state = 2;  // Show smell graph
+            else if (keyboard.IsKeyDown(Keys.D0))
+                state = 0;  // Show nothing
         }
 
         public virtual void Draw(SpriteBatch batch)
@@ -202,14 +245,37 @@ namespace ColorWars
            // for (int i = 0; i != polygons.Count; ++i)
            //     polygons[i].Draw(batch, i, content);
 
-           // movement.Draw(content, batch);
-           // smells.Draw(content, batch);
+            if (state == 1)
+            {
+                int id = 0;
+                foreach (Waypoint w in waypoints)
+                    w.Draw(content, batch, ++id);
+
+                movement.Draw(content, batch);
+            }
+            else if (state == 2)
+            {
+                smells.Draw(content, batch);
+            }
+
+            // Write score
+            int s = 0;
+            foreach (Enemy enemy in squorres)
+                s += 100 - (int)enemy.life;
+
+            score = (int) MathHelper.Max(s, score);
+            batch.DrawString(font, "Score: " + score, new Vector2(800, 50), Color.Black);
         }
 
         #endregion
 
         #region Auxiliar methods
-        
+
+        protected bool Dead(Character character)
+        {
+            return character.spriteColor.A <= 0;
+        }
+
         protected bool NotActivated(Paintball ball)
         {
             return !ball.activated;

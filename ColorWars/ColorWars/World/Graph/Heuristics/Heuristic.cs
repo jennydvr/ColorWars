@@ -7,7 +7,7 @@ namespace ColorWars
         /// <summary>
         /// Goal that this heuristic is estimating for
         /// </summary>
-        private Node goal;
+        protected Node goal;
 
         /// <summary>
         /// Constructor
@@ -23,9 +23,9 @@ namespace ColorWars
         /// </summary>
         /// <param name="node">Node to estimate for</param>
         /// <returns>Float estimated</returns>
-        public float estimate(Node node)
+        public virtual float estimate(Node node)
         {
-            return GameMode.movement.arcs[goal.id, node.id];
+            return 0;
         }
     }
 }

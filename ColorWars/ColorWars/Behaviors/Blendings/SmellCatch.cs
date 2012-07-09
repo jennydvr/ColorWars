@@ -26,9 +26,12 @@ namespace ColorWars
 
             // Create the blending behaviors
             BehaviorAndWeight a = new BehaviorAndWeight(new LookWhereYoureGoing(), 1);
-            BehaviorAndWeight b = new BehaviorAndWeight(new FollowPath(), 1.5f);
-            BehaviorAndWeight c = new BehaviorAndWeight(new ObstacleAvoidance(), 0.5f);
-            BehaviorAndWeight d = new BehaviorAndWeight(new FriendsAvoidance(owner), 2);
+            BehaviorAndWeight b = new BehaviorAndWeight(new ObstacleAvoidance(), 0.5f);
+            BehaviorAndWeight c = new BehaviorAndWeight(new FriendsAvoidance(owner), 2);
+
+            FollowPath f = new FollowPath();
+            f.heuristic = 's';
+            BehaviorAndWeight d = new BehaviorAndWeight(f, 1.5f);
 
             // Add them to the list
             blending.behaviors.Add(a);
@@ -51,9 +54,7 @@ namespace ColorWars
             Vector2 point = GetNearestNode(kinematic).point;
             kinematic.position = new Vector3(point.X, point.Y, 0);
 
-            Gearset.GS.ShowMark("origin", point);
-
-            blending.behaviors[1].behavior.Initialize(character, kinematic);
+            blending.behaviors[3].behavior.Initialize(character, kinematic);
         }
 
         #endregion

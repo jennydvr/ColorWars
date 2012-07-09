@@ -76,7 +76,8 @@ namespace ColorWars
                     {
                         scent.intensity = newIntensity;
                         scent.endInterval = maxtime * newIntensity * 3.5f;
-                        scent.origin = graph.nodes[id];
+                    //    scent.origin = graph.nodes[id];
+                        scent.origin = origin;
                         scent.Propagate();
                     }
 
@@ -86,7 +87,8 @@ namespace ColorWars
                 // If there wasn't a scent in the node, add one
                 if (ok)
                 {
-                    Scent s = new Scent(i, newIntensity, graph.nodes[id], i);
+                 //   Scent s = new Scent(i, newIntensity, graph.nodes[id], i);
+                    Scent s = new Scent(i, newIntensity, origin, i);
                     graph.nodes[i].AddSignal(s);
                     s.Propagate();
                 }

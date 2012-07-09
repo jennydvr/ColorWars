@@ -17,6 +17,11 @@ namespace ColorWars
         /// </summary>
         public List<Signal> signals = new List<Signal>();
 
+        /// <summary>
+        /// Indicates whether this node is safe or not
+        /// </summary>
+        public bool safeNode = true;
+
         #endregion
 
         #region Initialize
@@ -55,6 +60,16 @@ namespace ColorWars
             foreach (Signal signal in signals)
                 if (signal.activated)
                     this.color = Color.Gray;
+
+            // Update this node safety
+            Vector3 mypos = new Vector3(point.X, point.Y, 0);
+            Vector3 dottypos = GameMode.dotty.kinematic.position;
+
+            if ((dottypos - mypos).Length() <= 250)
+                safeNode = false;
+            else
+                safeNode = true;
+
         }
 
         /// <summary>
